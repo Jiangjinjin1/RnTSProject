@@ -27,6 +27,10 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import CodePush from 'react-native-code-push';
+
+console.log('CodePush:',CodePush)
+
 const Section: React.FC<{
   title: string;
 }> = ({children, title}) => {
