@@ -28,7 +28,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import CodePush from 'react-native-code-push';
-import {getAppVersion} from "@/utils/native-util";
+import {getAppVersion, getPromiseText} from "@/utils/native-util";
 
 console.log('CodePush:', CodePush)
 
@@ -65,19 +65,22 @@ class App extends React.Component<any, any> {
         super(props)
         this.state = {
             version: '',
+            testText: '',
         }
     }
 
     async componentDidMount() {
         const version = await getAppVersion()
         console.log('version:', version)
+        const testText = await getPromiseText()
         this.setState({
             version,
+            testText,
         })
     }
 
     render() {
-        const { version } = this.state
+        const { version, testText } = this.state
         const isDarkMode = false
 
         const backgroundStyle = {
@@ -96,6 +99,9 @@ class App extends React.Component<any, any> {
                         }}>
                         <Section title="app版本号">
                             {version}
+                        </Section>
+                        <Section title="获取promise方法返回值">
+                            {testText}
                         </Section>
                         <Section title="Step One">
                             Edit <Text style={styles.highlight}>App.tsx</Text> to change this

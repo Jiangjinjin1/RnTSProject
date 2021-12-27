@@ -17,4 +17,9 @@ RCT_EXPORT_METHOD(getAppVersion:(RCTResponseSenderBlock)callback) {
   }
 }
 
+#pragma mark 测试promise返回
+RCT_EXPORT_METHOD(getPromiseText:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject) {
+  resolve(@[@"this is a promise function"]);
+}
+
 @end
