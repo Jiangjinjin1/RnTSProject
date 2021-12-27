@@ -1,0 +1,53 @@
+{
+  "extends": [
+    "tslint:latest",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
+  "linterOptions": {
+    "exclude": [
+      "**/*.js"
+    ]
+  },
+  "import-blacklist": [true, "rxjs", "lodash"],
+  "rules": {
+    "member-ordering": false,
+    "ordered-imports": [false],
+    "object-literal-sort-keys": [false],
+    "no-duplicate-imports": "off",
+    "max-len":["error", { "code": 140, "tabWidth": 4 }],
+    "variable-name": {
+      "options": [
+        "check-format",
+        "allow-leading-underscore",
+        "allow-pascal-case",
+        "allow-snake-case",
+        "allow-trailing-underscore",
+        "require-const-for-all-caps",
+        "ban-keywords"
+      ]
+    },
+    "no-unused-expression": [true, "allow-fast-null-checks"],
+    "max-classes-per-file": [true, 5, "exclude-class-expressions"],
+    "curly": [true, "ignore-same-line"],
+    "jsx-no-lambda": false,
+    "prefer-conditional-expression": false,
+    "no-string-throw":false,
+    "no-shadowed-variable": false
+  },
+  "jsRules": {
+    "object-literal-sort-keys": [false],
+    "variable-name": {
+      "options": [
+        "ban-keywords",
+        "check-format",
+        "allow-snake-case",
+        "allow-leading-underscore",
+        "allow-trailing-underscore",
+        "allow-pascal-case"
+      ]
+    },
+    "curly": true
+
+  }
+}
