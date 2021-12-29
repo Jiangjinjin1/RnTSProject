@@ -17,20 +17,98 @@ import {
     Text,
     useColorScheme,
     View,
+    AppState,
+    TouchableOpacity,
 } from 'react-native';
 
 import {
     Colors,
-    DebugInstructions,
     Header,
-    LearnMoreLinks,
-    ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import CodePush from 'react-native-code-push';
 import {getAppVersion, getPromiseText} from "@/utils/native-util";
+import CodePushStatusView, {CodePushOpenDebugEvent, CodePushSyncEvent} from '@/Component/CodePushStatusView'
 
-console.log('CodePush:', CodePush)
+class App extends React.Component<any, any> {
+    constructor(props: any) {
+        super(props)
+        this.state = {
+            version: '',
+            testText: '',
+        }
+    }
+
+    async componentDidMount() {
+        this._checkUpdate()
+
+        this._checkUpdate()
+        AppState.addEventListener('change', this._handleAppStateChange)
+
+        const version = await getAppVersion()
+        console.log('version:', version)
+        const testText = await getPromiseText()
+        this.setState({
+            version,
+            testText,
+        })
+    }
+
+    componentWillUnmount() {
+        AppState.removeEventListener('change', this._handleAppStateChange)
+    }
+
+    _showCodePushView = () => {
+        CodePushOpenDebugEvent()
+    }
+
+    _checkUpdate = () => {
+        CodePushSyncEvent()
+    }
+
+    _handleAppStateChange = (nextAppState) => {
+        if (nextAppState != null && nextAppState === 'active') {
+            this._checkUpdate()
+        }
+    }
+
+    render() {
+        const {version, testText} = this.state
+        const isDarkMode = false
+
+        const backgroundStyle = {
+            backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+        }
+
+        const render = (
+            <SafeAreaView style={backgroundStyle}>
+                <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'}/>
+                <ScrollView
+                    contentInsetAdjustmentBehavior="automatic"
+                    style={backgroundStyle}>
+                    <TouchableOpacity
+                        onLongPress={this._showCodePushView}
+                    >
+                        <Header/>
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+                        }}>
+                        <Section title="app版本号">
+                            {version}
+                        </Section>
+                        <Section title="获取promise方法返回值">
+                            {testText}
+                        </Section>
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+        )
+        return (
+            <CodePushStatusView>{render}</CodePushStatusView>
+        )
+    }
+}
 
 const Section: React.FC<{
     title: string;
@@ -59,70 +137,6 @@ const Section: React.FC<{
         </View>
     );
 };
-
-class App extends React.Component<any, any> {
-    constructor(props: any) {
-        super(props)
-        this.state = {
-            version: '',
-            testText: '',
-        }
-    }
-
-    async componentDidMount() {
-        const version = await getAppVersion()
-        console.log('version:', version)
-        const testText = await getPromiseText()
-        this.setState({
-            version,
-            testText,
-        })
-    }
-
-    render() {
-        const { version, testText } = this.state
-        const isDarkMode = false
-
-        const backgroundStyle = {
-            backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-        }
-        return (
-            <SafeAreaView style={backgroundStyle}>
-                <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'}/>
-                <ScrollView
-                    contentInsetAdjustmentBehavior="automatic"
-                    style={backgroundStyle}>
-                    <Header/>
-                    <View
-                        style={{
-                            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-                        }}>
-                        <Section title="app版本号">
-                            {version}
-                        </Section>
-                        <Section title="获取promise方法返回值">
-                            {testText}
-                        </Section>
-                        <Section title="Step One">
-                            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-                            screen and then come back to see your edits.
-                        </Section>
-                        <Section title="See Your Changes">
-                            <ReloadInstructions/>
-                        </Section>
-                        <Section title="Debug">
-                            <DebugInstructions/>
-                        </Section>
-                        <Section title="Learn More">
-                            Read the docs to discover what to do next:
-                        </Section>
-                        <LearnMoreLinks/>
-                    </View>
-                </ScrollView>
-            </SafeAreaView>
-        )
-    }
-}
 
 const styles = StyleSheet.create({
     sectionContainer: {
