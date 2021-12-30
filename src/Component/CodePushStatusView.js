@@ -108,6 +108,7 @@ class CodePushStatusView extends Component {
 				const _getRowInfo = () => {
 					if (!metadata || typeof metadata !== 'object') return ''
 
+					console.log('metadata---:', metadata)
 					return Object.entries(metadata).reduce((result, next) => {
 						const key = next[0]
 						if (!ignorePackageList.includes(key)) {
@@ -182,6 +183,7 @@ class CodePushStatusView extends Component {
 	}
 
 	_codePushStatusDidChange = (syncStatus, msg) => {
+		console.log('syncStatus---:',syncStatus)
 		switch (syncStatus) {
 			case CodePush.SyncStatus.CHECKING_FOR_UPDATE:
 				this.setState({ syncMessage: 'Checking for update.' })
@@ -223,6 +225,7 @@ class CodePushStatusView extends Component {
 		const { deploymentKey } = this.props
 		if (deploymentKey) return deploymentKey
 		const result = await CodePush.getConfiguration()
+		console.log('getDeploymentKey---:', result)
 		return result.deploymentKey
 	}
 

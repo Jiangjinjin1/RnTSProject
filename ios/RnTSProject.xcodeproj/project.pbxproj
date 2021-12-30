@@ -525,7 +525,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODEPUSH_KEY = "";
+				CODEPUSH_KEY = _GXnu41tJBabDjLGVjDvvRiZUTJ2V_V8kbzWM;
 				CODEPUSH_URL = "http://home.smallerha.com:3000";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
