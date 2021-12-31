@@ -132,7 +132,7 @@ class CodePushStatusView extends Component {
 	}
 
 	sync = async () => {
-		if (__DEV__) return
+		// if (__DEV__) return
 		const deploymentKey = await this._getDeploymentKey()
 		if (!deploymentKey || deploymentKey === '') {
 			this.setState({ syncMessage: 'No DeploymentKey Set', progress: false })

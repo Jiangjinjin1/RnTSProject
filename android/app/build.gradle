@@ -161,6 +161,9 @@ android {
                     abiFilters nativeArchitectures.split(',')
                 }
             }
+            // 热更新配置
+            buildConfigField "String", "CODEPUSH_KEY", '"_GXnu41tJBabDjLGVjDvvRiZUTJ2V_V8kbzWM"'
+            buildConfigField "String", "CODEPUSH_URL", '"http://home.smallerha.com:3000"'
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
@@ -168,6 +171,9 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            // 热更新配置
+            buildConfigField "String", "CODEPUSH_KEY", '"_GXnu41tJBabDjLGVjDvvRiZUTJ2V_V8kbzWM"'
+            buildConfigField "String", "CODEPUSH_URL", '"http://home.smallerha.com:3000"'
         }
     }
 

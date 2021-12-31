@@ -28,10 +28,10 @@ public class MainApplication extends Application implements ReactApplication {
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           packages.add(CodePush(
-                                "lkV-a7nb_AWLYQEBWCeUbtFKqVl-EIYsk8HLw",
+                                BuildConfig.CODEPUSH_KEY,
                                 MainApplication.this,
                                 BuildConfig.DEBUG,
-                                "http://192.168.50.136:3000"
+                                BuildConfig.CODEPUSH_URL
                              ))
           return packages;
         }
