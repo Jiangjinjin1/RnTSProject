@@ -9,11 +9,11 @@ desc="($nowStr)$(git log -1 --pretty=%B)"
 case $2 in
   "ios")
     echo "jsBundle for ios..."
-    code-push release-react MyApp-ios ios -d "$1" --description "$desc"
+    code-push release-react MyApp-iOS ios -d "$1" --description "$desc"
     ;;
   "android")
     echo "jsBundle for android"
-    code-push release-react MyApp-android android -d "$1" --description "$desc"
+    code-push release-react MyApp-Android android -d "$1" --description "$desc"
     ;;
    *)
     echo "not miss matching"
