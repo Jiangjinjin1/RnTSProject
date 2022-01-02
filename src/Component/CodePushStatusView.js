@@ -75,7 +75,8 @@ class CodePushStatusView extends Component {
 				},
 				{
 					title: '前台更新',
-					onPress: this.syncImmediate,
+					// onPress: this.syncImmediate,
+					onPress: this.sync,
 				},
 				{
 					title: '包信息',
@@ -104,12 +105,10 @@ class CodePushStatusView extends Component {
 	getUpdateMetadata = () => {
 		CodePush.getUpdateMetadata(CodePush.UpdateState.RUNNING).then(
 			(metadata) => {
-				const syncMessage = 'Running binary version'
 				const _getRowInfo = () => {
-					if (!metadata || typeof metadata !== 'object') return ''
+					if (!metadata || typeof metadata !== 'object') return 'Running binary version'
 
-					console.log('metadata---:', metadata)
-					return Object.entries(metadata).reduce((result, next) => {
+					const rows = Object.entries(metadata).reduce((result, next) => {
 						const key = next[0]
 						if (!ignorePackageList.includes(key)) {
 							result.push({
@@ -119,20 +118,28 @@ class CodePushStatusView extends Component {
 						}
 						return result
 					}, [])
+
+					return (
+						<>
+							{rows.map((sub, index) => (
+								<Row key={index} {...sub} />
+							))}
+						</>
+					)
 				}
 				this.setState({
-					syncMessage: metadata ? _getRowInfo(metadata) : syncMessage,
+					syncContent: _getRowInfo(metadata),
 					progress: false,
 				})
 			},
 			(error) => {
-				this.setState({ syncMessage: `Error: ${error}`, progress: false })
+				this.setState({ syncContent: `Error: ${error}`, progress: false })
 			},
 		)
 	}
 
 	sync = async () => {
-		// if (__DEV__) return
+		if (__DEV__) return
 		const deploymentKey = await this._getDeploymentKey()
 		if (!deploymentKey || deploymentKey === '') {
 			this.setState({ syncMessage: 'No DeploymentKey Set', progress: false })
@@ -183,7 +190,6 @@ class CodePushStatusView extends Component {
 	}
 
 	_codePushStatusDidChange = (syncStatus, msg) => {
-		console.log('syncStatus---:',syncStatus)
 		switch (syncStatus) {
 			case CodePush.SyncStatus.CHECKING_FOR_UPDATE:
 				this.setState({ syncMessage: 'Checking for update.' })
@@ -225,7 +231,6 @@ class CodePushStatusView extends Component {
 		const { deploymentKey } = this.props
 		if (deploymentKey) return deploymentKey
 		const result = await CodePush.getConfiguration()
-		console.log('getDeploymentKey---:', result)
 		return result.deploymentKey
 	}
 
