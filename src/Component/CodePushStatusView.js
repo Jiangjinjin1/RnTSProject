@@ -118,22 +118,15 @@ class CodePushStatusView extends Component {
 						}
 						return result
 					}, [])
-
-					return (
-						<>
-							{rows.map((sub, index) => (
-								<Row key={index} {...sub} />
-							))}
-						</>
-					)
+					return rows
 				}
 				this.setState({
-					syncContent: _getRowInfo(metadata),
+					syncMessage: _getRowInfo(metadata),
 					progress: false,
 				})
 			},
 			(error) => {
-				this.setState({ syncContent: `Error: ${error}`, progress: false })
+				this.setState({ syncMessage: `Error: ${error}`, progress: false })
 			},
 		)
 	}
