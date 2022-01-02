@@ -52,24 +52,24 @@ class App extends React.Component<any, any> {
             testText,
         })
 
-        this.getMoviesFromApiAsync()
+        // this.getMoviesFromApiAsync()
     }
 
     componentWillUnmount() {
         AppState.removeEventListener('change', this._handleAppStateChange)
     }
 
-    getMoviesFromApiAsync = () => {
-        return fetch("https://facebook.github.io/react-native/movies.json")
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log('responseJson:',responseJson)
-                return responseJson.movies;
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }
+    // getMoviesFromApiAsync = () => {
+    //     return fetch("https://facebook.github.io/react-native/movies.json")
+    //         .then((response) => response.json())
+    //         .then((responseJson) => {
+    //             console.log('responseJson:',responseJson)
+    //             return responseJson.movies;
+    //         })
+    //         .catch((error) => {
+    //             console.error(error);
+    //         });
+    // }
 
     _showCodePushView = () => {
         CodePushOpenDebugEvent()
