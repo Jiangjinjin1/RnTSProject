@@ -114,6 +114,9 @@ class App extends React.Component<any, any> {
                         <Section title="获取promise方法返回值">
                             {testText}
                         </Section>
+                        <Section title="我来测试热更新了。。。">
+                            {'我这是成功了！！！'}
+                        </Section>
                     </View>
                 </ScrollView>
             </SafeAreaView>
