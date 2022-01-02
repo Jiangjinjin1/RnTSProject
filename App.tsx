@@ -106,7 +106,7 @@ class App extends React.Component<any, any> {
                     </TouchableOpacity>
                     <View
                         style={{
-                            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+                            backgroundColor: Colors.white,
                         }}>
                         <Section title="app版本号">
                             {version}
@@ -127,14 +127,13 @@ class App extends React.Component<any, any> {
 const Section: React.FC<{
     title: string;
 }> = ({children, title}) => {
-    const isDarkMode = useColorScheme() === 'dark';
     return (
         <View style={styles.sectionContainer}>
             <Text
                 style={[
                     styles.sectionTitle,
                     {
-                        color: isDarkMode ? Colors.white : Colors.black,
+                        color: Colors.black,
                     },
                 ]}>
                 {title}
@@ -143,7 +142,7 @@ const Section: React.FC<{
                 style={[
                     styles.sectionDescription,
                     {
-                        color: isDarkMode ? Colors.light : Colors.dark,
+                        color: Colors.dark,
                     },
                 ]}>
                 {children}
