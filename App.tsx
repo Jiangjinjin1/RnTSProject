@@ -90,7 +90,7 @@ class App extends React.Component<any, any> {
         const isDarkMode = false
 
         const backgroundStyle = {
-            backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+            backgroundColor: Colors.lighter,
         }
 
         const render = (
