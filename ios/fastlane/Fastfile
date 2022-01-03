@@ -1,0 +1,74 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  before_all do
+    ENV["MATCH_PASSWORD"] = '123456'
+  end
+
+  lane :match_all do
+    sh "fastlane match development --readonly"
+    sh "fastlane match adhoc --readonly"
+    sh "fastlane match appstore --readonly"
+  end
+
+  lane :Debug do
+    match(app_identifier: "org.reactjs.native.test.RnTSProject", type: "development", keychain_password: '123456', force_for_new_devices: true)
+    gym(
+            clean: true,
+            scheme: "RnTSProject",
+            workspace: "RnTSProject.xcworkspace",
+            configuration: 'Debug',
+            include_bitcode: true,
+            export_method: "development",
+            xcargs: {
+              :CODE_PUSH_DEPLOY_KEY => 'kxqNFICaBLgYDnqkOV5cFJqt8s6h4ksvOXqog',
+            }
+     )
+  end
+
+  lane :Release do
+      match(app_identifier: "org.reactjs.native.test.RnTSProject", type: "development", keychain_password: '123456', force_for_new_devices: true)
+      gym(
+              clean: true,
+              scheme: "RnTSProject",
+              workspace: "RnTSProject.xcworkspace",
+              configuration: 'Release',
+              include_bitcode: true,
+              export_method: "development",
+              xcargs: {
+                :CODE_PUSH_DEPLOY_KEY => 'kxqNFICaBLgYDnqkOV5cFJqt8s6h4ksvOXqog',
+              }
+       )
+    end
+
+    lane :AppStore do
+          match(app_identifier: "org.reactjs.native.test.RnTSProject", type: "appstore", keychain_password: '123456')
+          gym(
+                  clean: true,
+                  scheme: "RnTSProject",
+                  workspace: "RnTSProject.xcworkspace",
+                  configuration: 'Release',
+                  include_bitcode: true,
+                  export_method: "app-store",
+                  xcargs: {
+                    :CODE_PUSH_DEPLOY_KEY => 'xRdNGWb3hML4ISJLbfqlHSQvL6q84ksvOXqog',
+                  }
+           )
+    end
+
+end
