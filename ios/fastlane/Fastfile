@@ -1,17 +1,4 @@
-# This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
-#
-# For a list of all available actions, check out
-#
-#     https://docs.fastlane.tools/actions
-#
-# For a list of all available plugins, check out
-#
-#     https://docs.fastlane.tools/plugins/available-plugins
-#
 
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
 
 default_platform(:ios)
 
@@ -26,49 +13,41 @@ platform :ios do
     sh "fastlane match appstore --readonly"
   end
 
-  lane :Debug do
-    match(app_identifier: "org.reactjs.native.test.RnTSProject", type: "development", keychain_password: '123456', force_for_new_devices: true)
+  desc "Description of what the lane does"
+  lane :Staging do |options|
+    desc = options[:desc]
+    if desc.nil?
+      desc = ""
+    end
+
+    time = Time.new.strftime("%Y-%m-%d-%H-%M") #获取时间格式
+    version = get_version_number#获取版本号
+    ipaName = "Release_#{version}_#{time}.ipa"
+    api_key = "4d23af7f1f230b7933965ae36755b22d"
+    user_key = "c871b42f3b5018e3fd065845286aa51c"
+
     gym(
-            clean: true,
-            scheme: "RnTSProject",
-            workspace: "RnTSProject.xcworkspace",
-            configuration: 'Debug',
-            include_bitcode: true,
-            export_method: "development",
-            xcargs: {
-              :CODE_PUSH_DEPLOY_KEY => 'kxqNFICaBLgYDnqkOV5cFJqt8s6h4ksvOXqog',
-            }
-     )
+      clean: true, #项目在构造之前进行清洁
+      silent: true, #在构建时隐藏所有不必要的信息
+      scheme:"RnTSProject", #项目名称
+      export_method:"development", #打包的类型
+      configuration:"Release", #模式，默认Release，还有Debug
+      workspace: "RnTSProject.xcworkspace", #工作空间文件的路径
+      output_name:"#{ipaName}", #输出的包名
+      output_directory:"./build", #输出的位置
+      xcargs: {
+        :CODEPUSH_KEY => 'kxqNFICaBLgYDnqkOV5cFJqt8s6h4ksvOXqog', #当构建应用时，将附加参数传递给xcodebuild。请确保引用多个参数
+      }
+    )
+    #上传蒲公英
+    pgyer(
+      api_key: "#{api_key}",
+      user_key: "#{user_key}",
+      password: "8888",
+      update_description: desc,
+    )
+    # 清空缓存文件
+    clear_derived_data
   end
-
-  lane :Release do
-      match(app_identifier: "org.reactjs.native.test.RnTSProject", type: "development", keychain_password: '123456', force_for_new_devices: true)
-      gym(
-              clean: true,
-              scheme: "RnTSProject",
-              workspace: "RnTSProject.xcworkspace",
-              configuration: 'Release',
-              include_bitcode: true,
-              export_method: "development",
-              xcargs: {
-                :CODE_PUSH_DEPLOY_KEY => 'kxqNFICaBLgYDnqkOV5cFJqt8s6h4ksvOXqog',
-              }
-       )
-    end
-
-    lane :AppStore do
-          match(app_identifier: "org.reactjs.native.test.RnTSProject", type: "appstore", keychain_password: '123456')
-          gym(
-                  clean: true,
-                  scheme: "RnTSProject",
-                  workspace: "RnTSProject.xcworkspace",
-                  configuration: 'Release',
-                  include_bitcode: true,
-                  export_method: "app-store",
-                  xcargs: {
-                    :CODE_PUSH_DEPLOY_KEY => 'xRdNGWb3hML4ISJLbfqlHSQvL6q84ksvOXqog',
-                  }
-           )
-    end
 
 end

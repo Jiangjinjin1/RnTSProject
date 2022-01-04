@@ -1,6 +1,6 @@
 app_identifier("org.reactjs.native.test.RnTSProject") # The bundle identifier of your app
 apple_id("1837264450@qq.com") # Your Apple email address
 
-
+# team_id("PQASC5W6A3") # Developer Portal Team ID
 # For more information about the Appfile, see:
 #     https://docs.fastlane.tools/advanced/#appfile

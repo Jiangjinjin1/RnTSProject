@@ -23,29 +23,13 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
-### ios Debug
+### ios Staging
 
 ```sh
-[bundle exec] fastlane ios Debug
+[bundle exec] fastlane ios Staging
 ```
 
-
-
-### ios Release
-
-```sh
-[bundle exec] fastlane ios Release
-```
-
-
-
-### ios AppStore
-
-```sh
-[bundle exec] fastlane ios AppStore
-```
-
-
+Description of what the lane does
 
 ----
 
