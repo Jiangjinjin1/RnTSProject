@@ -115,7 +115,7 @@ class App extends React.Component<any, any> {
                             {testText}
                         </Section>
                         <Section title="我来测试热更新了。。。">
-                            {'测试热更内容。。。'}
+                            {'热更内容有变化。。。'}
                         </Section>
                     </View>
                 </ScrollView>
